@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
 public class LocationPopupPage extends BasicPage {
 
 	public LocationPopupPage(WebDriver driver, JavascriptExecutor js, WebDriverWait waiter) {
@@ -18,7 +17,7 @@ public class LocationPopupPage extends BasicPage {
 	}
 
 	public WebElement closeBtn() {
-		return driver.findElement(By.className("close-btn"));
+		return driver.findElement(By.className("close-btn-white"));
 	}
 
 	public WebElement getKeyword() {
@@ -36,18 +35,18 @@ public class LocationPopupPage extends BasicPage {
 	public WebElement getSubmit() {
 		return driver.findElement(By.xpath("//*[@name='btn_submit']"));
 	}
-	
+
 	public void clickLocation() {
 		this.getLocation().click();
 	}
-	
+
 	public void setLocation(String locationName) {
 		this.getKeyword().click();
 		String a = this.getLocationItem(locationName).getAttribute("data-value");
 		js.executeScript("arguments[0].value= arguments[1]", this.getLocationInput(), a);
 		js.executeScript("arguments[0].click()", this.getSubmit());
 	}
-	
+
 	public void close() {
 		this.closeBtn().click();
 	}

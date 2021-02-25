@@ -1,23 +1,44 @@
 package tests;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class ProfileTest extends BasicTest {
 
-	@Test
-	public void test() throws InterruptedException {
-		
+	SoftAssert sa = new SoftAssert();
+
+	@Test(priority = 1)
+	public void editProfileTest() throws InterruptedException {
+
 		this.driver.navigate().to(baseUrl + "/guest-user/login-form");
+		this.LocationPopupElement.close();
 		this.LoginElement.login(email, password);
-		Thread.sleep(3000);
+		sa.assertTrue(this.NotificationSistemElement.messageText().contains("Login Successfull"));
 		this.driver.navigate().to(baseUrl + "/member/profile");
-		Thread.sleep(3000);
 		this.ProfileElement.change();
-		Thread.sleep(3000);
-		this.ProfileElement.updatePhoto(photo);
-		Thread.sleep(9000);
+		sa.assertTrue(this.NotificationSistemElement.messageText().contains("Setup Successful"));
+		this.AuthElement.logoutAccount();
+		sa.assertTrue(this.NotificationSistemElement.messageText().contains("Logout Successfull!"));
+	}
+
+	@Test(priority = 2)
+	public void changeProfileImageTest() throws IOException {
+		this.driver.navigate().to(baseUrl + "/guest-user/login-form");
+		this.LocationPopupElement.close();
+		this.LoginElement.login(email, password);
+		sa.assertTrue(this.NotificationSistemElement.messageText().contains("Login Successfull"));
+		this.driver.navigate().to(baseUrl + "/member/profile");
+		String imgPath = new File("img/VE9DuR.jpg").getCanonicalPath();
+		this.ProfileElement.updatePhoto(imgPath);
+		sa.assertTrue(this.NotificationSistemElement.messageText().contains("Profile Image Uploaded Successfully"));
+		this.NotificationSistemElement.waiter();
 		this.ProfileElement.deletePhoto();
-		Thread.sleep(9000);
-		this.ProfileElement.savebtn().click();
+		sa.assertTrue(this.NotificationSistemElement.messageText().contains("Profile Image Deleted Successfully"));
+		this.NotificationSistemElement.waiter();
+		this.AuthElement.logoutAccount();
+		sa.assertTrue(this.NotificationSistemElement.messageText().contains("Logout Successfull!"));
 	}
 }
