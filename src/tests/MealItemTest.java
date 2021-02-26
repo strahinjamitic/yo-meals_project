@@ -19,14 +19,17 @@ public class MealItemTest extends BasicTest {
 		this.driver.navigate().to(baseUrl + "meal/lobster-shrimp-chicken-quesadilla-combo");
 		this.LocationPopupElement.close();
 		this.MealElement.addToCart("2");
-		sa.assertTrue(this.NotificationSistemElement.messageText()
-				.contains("\"The Following Errors Occurred:\r\n" + "Please Select Location\"\r\n" + ""));
+		sa.assertTrue(
+				this.NotificationSistemElement.messageText()
+						.contains("\"The Following Errors Occurred:\r\n" + "Please Select Location\"\r\n" + ""),
+				"[ERROR] Unexpected message!");
 		this.NotificationSistemElement.waiter();
 		this.LocationPopupElement.clickLocation();
 		this.LocationPopupElement.setLocation("City Center - Albany");
 		Thread.sleep(3000);
 		this.MealElement.addToCart("2");
-		sa.assertTrue(this.NotificationSistemElement.messageText().contains("Meal Added To Cart"));
+		sa.assertTrue(this.NotificationSistemElement.messageText().contains("Meal Added To Cart"),
+				"[ERROR] Unexpected meal add to cart message!");
 	}
 
 	@Test(priority = 2)
@@ -35,13 +38,15 @@ public class MealItemTest extends BasicTest {
 		this.driver.navigate().to(baseUrl + "meal/lobster-shrimp-chicken-quesadilla-combo");
 		this.LocationPopupElement.close();
 		this.MealElement.favorite();
-		sa.assertTrue(this.NotificationSistemElement.messageText().contains("Please login first!"));
+		sa.assertTrue(this.NotificationSistemElement.messageText().contains("Please login first!"),
+				"[ERROR] Unexpected message!");
 		this.driver.navigate().to(baseUrl + "/guest-user/login-form");
 		this.LoginElement.login(email, password);
 		this.driver.navigate().to(baseUrl + "meal/lobster-shrimp-chicken-quesadilla-combo");
 		this.MealElement.favorite();
 		sa.assertTrue(
-				this.NotificationSistemElement.messageText().contains("Product has been added to your favorites."));
+				this.NotificationSistemElement.messageText().contains("Product has been added to your favorites."),
+				"[ERROR] Unexpected favorite product message!");
 	}
 
 	@Test(priority = 3)
@@ -64,7 +69,8 @@ public class MealItemTest extends BasicTest {
 			this.driver.navigate().to(mealUrl);
 			this.MealElement.addToCart(quantity);
 
-			sa.assertTrue(this.NotificationSistemElement.messageText().contains("Meal Added To Cart"));
+			sa.assertTrue(this.NotificationSistemElement.messageText().contains("Meal Added To Cart"),
+					"[ERROR] Unexpected meal add to cart message!");
 		}
 
 		fis.close();

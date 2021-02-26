@@ -26,7 +26,7 @@ public class SearchTest extends BasicTest {
 		XSSFSheet sheet = wb.getSheet("Meal Search Results");
 
 		for (int i = 1; i < 7; i++) {
- 
+
 			XSSFRow row = sheet.getRow(i);
 			String location = row.getCell(0).getStringCellValue();
 			String url = row.getCell(1).getStringCellValue();
@@ -36,11 +36,13 @@ public class SearchTest extends BasicTest {
 			this.LocationPopupElement.clickLocation();
 			this.LocationPopupElement.setLocation(location);
 			this.SearchResultElement.listOfProducts();
-			sa.assertTrue(this.SearchResultElement.numbreOfProducts() == numberOfProducts);
+			sa.assertTrue(this.SearchResultElement.numbreOfProducts() == numberOfProducts,
+					"[ERROR] Numbre of protucts not the same");
 
 			for (int j = 3; j < row.getLastCellNum(); j++) {
 				String productsName = row.getCell(j).getStringCellValue();
-				sa.assertEquals(productsName, this.SearchResultElement.nameOfProducts());
+				sa.assertEquals(productsName, this.SearchResultElement.nameOfProducts(),
+						"[ERROR] Unexpected name of product!");
 			}
 
 		}
