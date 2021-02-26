@@ -21,7 +21,11 @@ public class MealItemTest extends BasicTest {
 		this.MealElement.addToCart("2");
 		sa.assertTrue(
 				this.NotificationSistemElement.messageText()
-						.contains("\"The Following Errors Occurred:\r\n" + "Please Select Location\"\r\n" + ""),
+						.contains("The Following Errors Occurred:"),
+				"[ERROR] Unexpected message!");
+		sa.assertTrue(
+				this.NotificationSistemElement.messageText()
+						.contains("Please Select Location"),
 				"[ERROR] Unexpected message!");
 		this.NotificationSistemElement.waiter();
 		this.LocationPopupElement.clickLocation();
@@ -30,6 +34,8 @@ public class MealItemTest extends BasicTest {
 		this.MealElement.addToCart("2");
 		sa.assertTrue(this.NotificationSistemElement.messageText().contains("Meal Added To Cart"),
 				"[ERROR] Unexpected meal add to cart message!");
+		
+		sa.assertAll();
 	}
 
 	@Test(priority = 2)
@@ -47,6 +53,8 @@ public class MealItemTest extends BasicTest {
 		sa.assertTrue(
 				this.NotificationSistemElement.messageText().contains("Product has been added to your favorites."),
 				"[ERROR] Unexpected favorite product message!");
+		
+		sa.assertAll();
 	}
 
 	@Test(priority = 3)
@@ -73,6 +81,7 @@ public class MealItemTest extends BasicTest {
 					"[ERROR] Unexpected meal add to cart message!");
 		}
 
+		sa.assertAll();
 		fis.close();
 		wb.close();
 

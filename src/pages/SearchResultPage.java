@@ -29,7 +29,7 @@ public class SearchResultPage extends BasicPage {
 		return names;
 	}
 	
-	public int numbreOfProducts() {
+	public double numbreOfProducts() {
 		return this.listOfProducts().size();
 	}
 

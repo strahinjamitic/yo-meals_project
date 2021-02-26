@@ -31,22 +31,24 @@ public class SearchTest extends BasicTest {
 			String location = row.getCell(0).getStringCellValue();
 			String url = row.getCell(1).getStringCellValue();
 			double numberOfProducts = row.getCell(2).getNumericCellValue();
+			Thread.sleep(2000);
 
 			this.driver.navigate().to(url);
 			this.LocationPopupElement.clickLocation();
 			this.LocationPopupElement.setLocation(location);
-			this.SearchResultElement.listOfProducts();
-			sa.assertTrue(this.SearchResultElement.numbreOfProducts() == numberOfProducts,
-					"[ERROR] Numbre of protucts not the same");
+			Thread.sleep(2000);
+			sa.assertEquals(this.SearchResultElement.numbreOfProducts(), numberOfProducts,
+					"[ERROR] Numbre of products not the same");
 
-			for (int j = 3; j < row.getLastCellNum(); j++) {
+			for (int j = 3; j < numberOfProducts + 3; j++) {
+
 				String productsName = row.getCell(j).getStringCellValue();
-				sa.assertEquals(productsName, this.SearchResultElement.nameOfProducts(),
+				sa.assertTrue(this.SearchResultElement.nameOfProducts().get(j - 3).contains(productsName),
 						"[ERROR] Unexpected name of product!");
 			}
-
 		}
 
+		sa.assertAll();
 		fis.close();
 		wb.close();
 

@@ -25,6 +25,8 @@ public class ProfileTest extends BasicTest {
 		this.AuthElement.logoutAccount();
 		sa.assertTrue(this.NotificationSistemElement.messageText().contains("Logout Successfull!"),
 				"[ERROR] Unexpected logout message!");
+		
+		sa.assertAll();
 	}
 
 	@Test(priority = 2)
@@ -47,5 +49,7 @@ public class ProfileTest extends BasicTest {
 		this.AuthElement.logoutAccount();
 		sa.assertTrue(this.NotificationSistemElement.messageText().contains("Logout Successfull!"),
 				"[ERROR] Unexpected logout message!");
+		
+		sa.assertAll();
 	}
 }
